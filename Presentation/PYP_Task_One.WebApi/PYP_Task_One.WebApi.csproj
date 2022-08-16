@@ -14,4 +14,11 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\PYP_Task_One.Aplication\PYP_Task_One.Aplication.csproj" />
+    <ProjectReference Include="..\..\Core\PYP_Task_One.Domain\PYP_Task_One.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PYP_Task_One.Infrastructure\PYP_Task_One.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PYP_Task_One.Persistence\PYP_Task_One.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

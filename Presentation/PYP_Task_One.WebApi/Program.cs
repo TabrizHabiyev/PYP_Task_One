@@ -1,4 +1,8 @@
+using PYP_Task_One.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPersistenceServices();
 
 builder.Services.AddControllers();
 
