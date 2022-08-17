@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.0.6" />
+  </ItemGroup>
+
+	
+	
+	
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\PYP_Task_One.Aplication\PYP_Task_One.Aplication.csproj" />
+  </ItemGroup>
+
 </Project>

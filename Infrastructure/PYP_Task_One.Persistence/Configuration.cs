@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+
+using Microsoft.Extensions.Configuration;
 
 namespace PYP_Task_One.Persistence;
-static class Configuration
+public static class Configuration
 {
     static public string ConnectionString
     {
