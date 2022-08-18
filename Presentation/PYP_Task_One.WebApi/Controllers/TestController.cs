@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PYP_Task_One.Aplication.Features.Commands;
 using PYP_Task_One.Aplication.Services;
-
+using System.Net;
 
 namespace PYP_Task_One.WebApi.Controllers
 {
@@ -9,21 +11,23 @@ namespace PYP_Task_One.WebApi.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        private readonly IFileService _fileService;
+        private readonly IMediator _mediator;
 
-        public TestController(IFileService fileService)
+        public TestController(IMediator mediator)
         {
-            _fileService = fileService;
+            _mediator = mediator;
         }
 
-        // GET: api/<TestController>
 
         // POST api/<TestController>
         [HttpPost]
-        public async Task<bool> Post(IFormFile file)
+        public async Task<IActionResult> Post(IFormFile fromFile)
         {
-         var a = await _fileService.UploadAsyc(file);
-            return a;
+            ExcelDataToDbCommandRequest excelDataToDbCommandRequest = new();
+            excelDataToDbCommandRequest.formFile = fromFile;
+            ExcelDataToDbCommandResponse response = await _mediator.Send(excelDataToDbCommandRequest);
+
+          return StatusCode((int)HttpStatusCode.OK, response);
         }
     }
 }

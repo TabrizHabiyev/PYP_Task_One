@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using PYP_Task_One.Aplication.DTOs;
 using PYP_Task_One.Aplication.Services;
-using PYP_Task_One.Domain.Entites;
 
 namespace PYP_Task_One.Infrastructure.Services;
 public class FileService : IFileService
 {
-    public async Task<(bool, bool, bool)> UploadAsyc(IFormFile file)
+    public async Task<(bool, bool, bool, List<SpreadsheetDto>)> UploadAsyc(IFormFile file)
     {
+        List<SpreadsheetDto> datas = new List<SpreadsheetDto>();
 
-        if (!await IsXlsxOrXlsFileAsync(file)) return (false, false, false);
-        if (!ExcelSpreadsheetTemplateValidate(file)) return (true, false, false);
+        if (!await IsXlsxOrXlsFileAsync(file)) return (false, false, false,datas);
+        if (!ExcelSpreadsheetTemplateValidate(file)) return (true, false, false,datas);
 
 
 
@@ -21,13 +22,12 @@ public class FileService : IFileService
         ExcelWorksheet worksheet = package.Workbook.Worksheets.First();
         int rowCount = worksheet.Dimension.Rows;
 
-        List<Spreadsheet> datas = new List<Spreadsheet>();
 
         for (var row = 2; row <= rowCount; row++)
         {
             try
             {
-                Spreadsheet data = new Spreadsheet();
+                SpreadsheetDto data = new SpreadsheetDto();
                 double defaultValue = 0;
                 DateTime defaultDate = DateTime.MinValue;
 
@@ -58,7 +58,7 @@ public class FileService : IFileService
             }
         }
 
-        return (true, true, true);
+        return (true, true, true,datas);
     }
 
     public bool ExcelSpreadsheetTemplateValidate(IFormFile file)

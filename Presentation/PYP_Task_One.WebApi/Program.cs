@@ -1,3 +1,4 @@
+using PYP_Task_One.Aplication;
 using PYP_Task_One.Infrastructure;
 using PYP_Task_One.Persistence;
 
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistenceServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddAplicationServices();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
