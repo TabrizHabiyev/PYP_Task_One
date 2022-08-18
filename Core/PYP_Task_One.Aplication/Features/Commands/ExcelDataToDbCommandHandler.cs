@@ -1,17 +1,21 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using PYP_Task_One.Aplication.DTOs;
 using PYP_Task_One.Aplication.Repositories.File;
 using PYP_Task_One.Aplication.Services;
+using PYP_Task_One.Domain.Entites;
 
 namespace PYP_Task_One.Aplication.Features.Commands;
 public class ExcelDataToDbCommandHandlerI : IRequestHandler<ExcelDataToDbCommandRequest, ExcelDataToDbCommandResponse>
 {
     private readonly IFileService _fileService;
     private readonly IExcelDataWriteRepository _excelDataWriteRepository;
-    public ExcelDataToDbCommandHandlerI(IFileService fileService, IExcelDataWriteRepository excelDataWriteRepository)
+    private readonly IMapper _mapper;
+    public ExcelDataToDbCommandHandlerI(IFileService fileService, IExcelDataWriteRepository excelDataWriteRepository, IMapper mapper)
     {
         _fileService = fileService;
-      
+        _excelDataWriteRepository = excelDataWriteRepository;
+        _mapper = mapper;
     }
 
     public async Task<ExcelDataToDbCommandResponse> Handle(ExcelDataToDbCommandRequest request, CancellationToken cancellationToken)
@@ -20,7 +24,9 @@ public class ExcelDataToDbCommandHandlerI : IRequestHandler<ExcelDataToDbCommand
         
         if (datas != null)
         {
-            
+             List<Spreadsheet> spreadData = _mapper.Map<List<Spreadsheet>>(datas);
+             await  _excelDataWriteRepository.AddRangeAsync(spreadData);
+             await _excelDataWriteRepository.SaveAsync();
         }
         return new()
         {

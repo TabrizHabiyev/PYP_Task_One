@@ -10,9 +10,11 @@ public static class Configuration
         get
         {
             ConfigurationManager configurationManager = new();
-            configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/PYP_Task_One_WebAPI"));
+            configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/PYP_Task_One.WebApi"));
             configurationManager.AddJsonFile("appsettings.json");
             return configurationManager.GetConnectionString("Default");
+
+            
         }
     }
 }
