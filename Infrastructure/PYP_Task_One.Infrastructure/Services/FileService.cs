@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using PYP_Task_One.Aplication.DTOs;
+using PYP_Task_One.Aplication.Enums;
 using PYP_Task_One.Aplication.Services;
 
 namespace PYP_Task_One.Infrastructure.Services;
@@ -98,8 +99,6 @@ public class FileService : IFileService
         }
     }
 
-
-
     public async Task<bool> IsXlsxOrXlsFileAsync(IFormFile file)
     {
 
@@ -129,6 +128,27 @@ public class FileService : IFileService
         catch (Exception ex)
         {
             return false;
+        }
+
+    }
+
+    public async Task<string> GenerateExcelFileAsync(ReportType reportType,List<ReportDto> reportDtos)
+    {
+        var pathWithNewFolder = System.IO.Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/wwwroot/raport-file/{Guid.NewGuid().ToString()}");
+
+        string fileName = $"{reportType+DateTime.Now.ToString("dd.MMMM.yyyy HH:mm:ss")}.xlsx".Replace(":", "-");
+        var path = $"{pathWithNewFolder}/{fileName}";
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using var package = new ExcelPackage();
+        var workSheet = package.Workbook.Worksheets.Add("Sheet1").Cells[1, 1].LoadFromCollection(reportDtos, true);
+        try
+        {
+           await package.SaveAsAsync(path);
+            return path;
+        }
+        catch
+        {
+            return String.Empty;
         }
 
     }

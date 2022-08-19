@@ -32,6 +32,5 @@ public static class ReportExtension
                 Percent = type == Type.DiscountByProduct ? g.Sum(x => x.Discount) / g.Sum(x => x.GrossSales) * 100 : 0,
             }).AsNoTracking();
         
-        
     }
 }
