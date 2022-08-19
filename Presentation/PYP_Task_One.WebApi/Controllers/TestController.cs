@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PYP_Task_One.Aplication.Features.Commands;
-using PYP_Task_One.Aplication.Services;
+using PYP_Task_One.Aplication.Features.Commands.ExcelData;
+using PYP_Task_One.Aplication.Features.Queries.ExcelData;
 using System.Net;
 
 namespace PYP_Task_One.WebApi.Controllers
@@ -28,6 +27,17 @@ namespace PYP_Task_One.WebApi.Controllers
             ExcelDataToDbCommandResponse response = await _mediator.Send(excelDataToDbCommandRequest);
 
           return StatusCode((int)HttpStatusCode.OK, response);
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> SendReport([FromQuery] SendReportQueryRequest sendReportQueryRequest)
+        {
+
+            SendReportQueryResponse response = await _mediator.Send(sendReportQueryRequest);
+
+            return StatusCode((int)HttpStatusCode.OK, response);
         }
     }
 }

@@ -5,7 +5,7 @@ using PYP_Task_One.Aplication.Repositories.File;
 using PYP_Task_One.Aplication.Services;
 using PYP_Task_One.Domain.Entites;
 
-namespace PYP_Task_One.Aplication.Features.Commands;
+namespace PYP_Task_One.Aplication.Features.Commands.ExcelData;
 public class ExcelDataToDbCommandHandlerI : IRequestHandler<ExcelDataToDbCommandRequest, ExcelDataToDbCommandResponse>
 {
     private readonly IFileService _fileService;
@@ -20,13 +20,13 @@ public class ExcelDataToDbCommandHandlerI : IRequestHandler<ExcelDataToDbCommand
 
     public async Task<ExcelDataToDbCommandResponse> Handle(ExcelDataToDbCommandRequest request, CancellationToken cancellationToken)
     {
-        (bool IsXlsxOrXls, bool TemplateValidate, bool UploadSuccest , List<SpreadsheetDto> datas ) = await _fileService.UploadAsyc(request.formFile);
-        
+        (bool IsXlsxOrXls, bool TemplateValidate, bool UploadSuccest, List<SpreadsheetDto> datas) = await _fileService.UploadAsyc(request.formFile);
+
         if (datas != null)
         {
-             List<Spreadsheet> spreadData = _mapper.Map<List<Spreadsheet>>(datas);
-             await  _excelDataWriteRepository.AddRangeAsync(spreadData);
-             await _excelDataWriteRepository.SaveAsync();
+            List<Spreadsheet> spreadData = _mapper.Map<List<Spreadsheet>>(datas);
+            await _excelDataWriteRepository.AddRangeAsync(spreadData);
+            await _excelDataWriteRepository.SaveAsync();
         }
         return new()
         {

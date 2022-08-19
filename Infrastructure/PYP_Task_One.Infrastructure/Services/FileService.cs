@@ -10,8 +10,8 @@ public class FileService : IFileService
     {
         List<SpreadsheetDto> datas = new List<SpreadsheetDto>();
 
-        if (!await IsXlsxOrXlsFileAsync(file)) return (false, false, false,datas);
-        if (!ExcelSpreadsheetTemplateValidate(file)) return (true, false, false,datas);
+        if (!await IsXlsxOrXlsFileAsync(file)) return (false, false, false, datas);
+        if (!ExcelSpreadsheetTemplateValidate(file)) return (true, false, false, datas);
 
 
 
@@ -58,7 +58,7 @@ public class FileService : IFileService
             }
         }
 
-        return (true, true, true,datas);
+        return (true, true, true, datas);
     }
 
     public bool ExcelSpreadsheetTemplateValidate(IFormFile file)
@@ -95,7 +95,7 @@ public class FileService : IFileService
         {
 
             return false;
-        } 
+        }
     }
 
 

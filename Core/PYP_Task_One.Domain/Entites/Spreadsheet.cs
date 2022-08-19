@@ -4,8 +4,8 @@ using PYP_Task_One.Domain.Common;
 
 namespace PYP_Task_One.Domain.Entites;
 
-    public class Spreadsheet:BaseEntity
-    {
+public class Spreadsheet : BaseEntity
+{
     public string Segment { get; set; }
     public string Country { get; set; }
     public string Product { get; set; }

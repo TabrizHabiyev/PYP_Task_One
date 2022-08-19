@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace PYP_Task_One.Persistence;
 public static class Configuration
@@ -13,8 +11,6 @@ public static class Configuration
             configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/PYP_Task_One.WebApi"));
             configurationManager.AddJsonFile("appsettings.json");
             return configurationManager.GetConnectionString("Default");
-
-            
         }
     }
 }
