@@ -4,7 +4,6 @@ using PYP_Task_One.Aplication.DTOs;
 using PYP_Task_One.Aplication.Extensions;
 using PYP_Task_One.Aplication.Repositories.File;
 using PYP_Task_One.Aplication.Services;
-using System.Collections.Generic;
 
 namespace PYP_Task_One.Aplication.Features.Queries.ExcelData;
 
@@ -32,6 +31,6 @@ public class SendReportQueryHandler : IRequestHandler<SendReportQueryRequest, Se
         if (fileDirectory == null) return new() { };
         bool result = await _emailSenderService.SendEmailForReport(request.EmailAddresses, filePath);
         _fileService.DeleteDirectory(fileDirectory);
-        return new() { };
+        return new() { }; 
     }
 }

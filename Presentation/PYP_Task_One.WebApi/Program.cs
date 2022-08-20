@@ -1,4 +1,6 @@
+using FluentValidation.AspNetCore;
 using PYP_Task_One.Aplication;
+using PYP_Task_One.Aplication.Features.Queries.ExcelData;
 using PYP_Task_One.Infrastructure;
 using PYP_Task_One.Persistence;
 using System.Text.Json.Serialization;
@@ -13,7 +15,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
-});
+}).AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<SendReportQueryHandler>());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
