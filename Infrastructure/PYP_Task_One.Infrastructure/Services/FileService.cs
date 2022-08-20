@@ -132,24 +132,26 @@ public class FileService : IFileService
 
     }
 
-    public async Task<string> GenerateExcelFileAsync(ReportType reportType,List<ReportDto> reportDtos)
+    public async Task<(string, string)> GenerateExcelFileAsync(ReportType reportType,List<ReportDto> reportDtos)
     {
-        var pathWithNewFolder = System.IO.Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/wwwroot/raport-file/{Guid.NewGuid().ToString()}");
-
+        string pathWithNewDirectory = $"{Directory.GetCurrentDirectory()}/wwwroot/raport-file/{Guid.NewGuid().ToString()}";
+        Directory.CreateDirectory(pathWithNewDirectory);
+        if (Directory.Exists(pathWithNewDirectory)) return (null, null);
         string fileName = $"{reportType+DateTime.Now.ToString("dd.MMMM.yyyy HH:mm:ss")}.xlsx".Replace(":", "-");
-        var path = $"{pathWithNewFolder}/{fileName}";
+        var filePath = $"{pathWithNewDirectory}/{fileName}";
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         using var package = new ExcelPackage();
         var workSheet = package.Workbook.Worksheets.Add("Sheet1").Cells[1, 1].LoadFromCollection(reportDtos, true);
         try
         {
-           await package.SaveAsAsync(path);
-            return path;
+           await package.SaveAsAsync(filePath);
+            return (filePath, pathWithNewDirectory);
         }
         catch
         {
-            return String.Empty;
+            return (null,null);
         }
 
     }
+    
 }

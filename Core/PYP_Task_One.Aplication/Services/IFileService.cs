@@ -9,5 +9,5 @@ public interface IFileService
     Task<(bool, bool, bool, List<SpreadsheetDto> spreadsheetDtos)> UploadAsyc(IFormFile file);
     bool ExcelSpreadsheetTemplateValidate(IFormFile file);
     Task<bool> IsXlsxOrXlsFileAsync(IFormFile file);
-    Task<string> GenerateExcelFileAsync(ReportType reportType, List<ReportDto> reportDtos);
+    Task<(string? filePath,string? fileDirectory)> GenerateExcelFileAsync(ReportType reportType, List<ReportDto> reportDtos);
 }
