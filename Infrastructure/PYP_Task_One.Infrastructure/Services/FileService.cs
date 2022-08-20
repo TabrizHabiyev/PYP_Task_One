@@ -154,4 +154,17 @@ public class FileService : IFileService
 
     }
     
+    public bool DeleteDirectory(string path)
+    {
+        if (!Directory.Exists(path)) return false;
+        try
+        {
+            Directory.Delete(path);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
