@@ -8,6 +8,6 @@ public class SendReportQueryRequest : IRequest<SendReportQueryResponse>
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public string[] AcceptorEmail { get; set; }
+    public string[] EmailAddresses { get; set; }
     public ReportType ReportType { get; set; }
 }
