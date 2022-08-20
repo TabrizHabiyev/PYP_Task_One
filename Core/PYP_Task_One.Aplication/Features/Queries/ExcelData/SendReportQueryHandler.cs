@@ -23,7 +23,11 @@ public class SendReportQueryHandler : IRequestHandler<SendReportQueryRequest, Se
         List<ReportDto> ReportDto = await _excelDataReadRepository.Table
              .GetReportByTypeFromDb(request.ReportType, request.StartDate, request.EndDate)
              .ToListAsync();
-        string result =await _fileService.GenerateExcelFileAsync(request.ReportType, ReportDto);
+        (string? filePath, string? fileDirectory) = await _fileService.GenerateExcelFileAsync(request.ReportType, ReportDto);
+
+        if (filePath != null)  _fileService.DeleteDirectory(fileDirectory);
+
+
         return new() { };
     }
 }

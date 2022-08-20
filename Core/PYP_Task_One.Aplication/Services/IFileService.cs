@@ -10,4 +10,5 @@ public interface IFileService
     bool ExcelSpreadsheetTemplateValidate(IFormFile file);
     Task<bool> IsXlsxOrXlsFileAsync(IFormFile file);
     Task<(string? filePath,string? fileDirectory)> GenerateExcelFileAsync(ReportType reportType, List<ReportDto> reportDtos);
+    public bool DeleteDirectory(string path);
 }

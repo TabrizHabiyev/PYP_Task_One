@@ -136,7 +136,7 @@ public class FileService : IFileService
     {
         string pathWithNewDirectory = $"{Directory.GetCurrentDirectory()}/wwwroot/raport-file/{Guid.NewGuid().ToString()}";
         Directory.CreateDirectory(pathWithNewDirectory);
-        if (Directory.Exists(pathWithNewDirectory)) return (null, null);
+        if (!Directory.Exists(pathWithNewDirectory)) return (null, null);
         string fileName = $"{reportType+DateTime.Now.ToString("dd.MMMM.yyyy HH:mm:ss")}.xlsx".Replace(":", "-");
         var filePath = $"{pathWithNewDirectory}/{fileName}";
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -159,7 +159,8 @@ public class FileService : IFileService
         if (!Directory.Exists(path)) return false;
         try
         {
-            Directory.Delete(path);
+            DirectoryInfo directory = new DirectoryInfo(path);
+            directory.Delete(true);
             return true;
         }
         catch
