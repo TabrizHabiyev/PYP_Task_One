@@ -27,7 +27,7 @@ public class SendReportQueryHandler : IRequestHandler<SendReportQueryRequest, Se
              .GetReportByTypeFromDb(request.ReportType, request.StartDate, request.EndDate)
              .ToListAsync();
 
-        if (reportDtos == null) return new() { IsSucccessful = false, StatusCode = 404, Message = $"{Messages.SendRaportMessage["NoData"]}" };
+        if (reportDtos.Count() < 1) return new() { IsSucccessful = false, StatusCode = 404, Message = $"{Messages.SendRaportMessage["NoData"]}" };
         (string? filePath, string? fileDirectory) = await _fileService.GenerateExcelFileAsync(request.ReportType, reportDtos);
 
         if (fileDirectory == null) return new() {IsSucccessful = false,StatusCode = 400,Message = $"{Messages.SendRaportMessage["GenarateExcelError"]}" };
