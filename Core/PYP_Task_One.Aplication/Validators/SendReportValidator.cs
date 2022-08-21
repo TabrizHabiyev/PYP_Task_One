@@ -5,7 +5,7 @@ namespace PYP_Task_One.Aplication.Validators;
 
 public class SendReportValidator:AbstractValidator<SendReportQueryRequest>
 {
-    public SendReportValidator()
+    public SendReportValidator() 
     {
         RuleForEach(e => e.EmailAddresses)
               .NotEmpty()
