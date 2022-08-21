@@ -29,7 +29,7 @@ public class SendReportQueryHandler : IRequestHandler<SendReportQueryRequest, Se
         (string? filePath, string? fileDirectory) = await _fileService.GenerateExcelFileAsync(request.ReportType, reportDtos);
 
         if (fileDirectory == null) return new() { };
-        bool result = await _emailSenderService.SendEmailForReport(request.EmailAddresses, filePath);
+        bool result = await _emailSenderService.SendEmailForReport(request.EmailAddresses, filePath, request.ReportType);
         _fileService.DeleteDirectory(fileDirectory);
         return new() { }; 
     }
