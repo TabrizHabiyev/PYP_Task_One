@@ -30,6 +30,7 @@ public class ExcelDataToDbCommandHandlerI : IRequestHandler<ExcelDataToDbCommand
         }
         return new()
         {
+            StatusCode = IsXlsxOrXls || TemplateValidate || UploadSuccest == true ? 200 : 400,
             Success = IsXlsxOrXls || TemplateValidate || UploadSuccest == true ? true : false,
             Message = IsXlsxOrXls != true ? "Corupted file type" :
             TemplateValidate != true ? "File template is not suitable" :

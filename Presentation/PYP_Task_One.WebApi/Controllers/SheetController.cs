@@ -17,8 +17,6 @@ namespace PYP_Task_One.WebApi.Controllers
             _mediator = mediator;
         }
 
-
-        // POST api/<TestController>
         [HttpPost]
         public async Task<IActionResult> Post(IFormFile fromFile)
         {
@@ -26,9 +24,8 @@ namespace PYP_Task_One.WebApi.Controllers
             excelDataToDbCommandRequest.formFile = fromFile;
             ExcelDataToDbCommandResponse response = await _mediator.Send(excelDataToDbCommandRequest);
 
-          return StatusCode((int)HttpStatusCode.OK, response);
+          return StatusCode(response.StatusCode, response);
         }
-
 
 
         [HttpGet]
@@ -37,7 +34,7 @@ namespace PYP_Task_One.WebApi.Controllers
 
             SendReportQueryResponse response = await _mediator.Send(sendReportQueryRequest);
 
-            return StatusCode((int)HttpStatusCode.OK, response);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

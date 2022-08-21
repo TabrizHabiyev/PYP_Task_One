@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PYP_Task_One.Aplication.DTOs;
 using PYP_Task_One.Aplication.Extensions;
 using PYP_Task_One.Aplication.Repositories.File;
+using PYP_Task_One.Aplication.RequestMessage;
 using PYP_Task_One.Aplication.Services;
 
 namespace PYP_Task_One.Aplication.Features.Queries.ExcelData;
@@ -26,11 +27,13 @@ public class SendReportQueryHandler : IRequestHandler<SendReportQueryRequest, Se
              .GetReportByTypeFromDb(request.ReportType, request.StartDate, request.EndDate)
              .ToListAsync();
 
+        if (reportDtos == null) return new() { IsSucccessful = false, StatusCode = 404, Message = $"{Messages.SendRaportMessage["NoData"]}" };
         (string? filePath, string? fileDirectory) = await _fileService.GenerateExcelFileAsync(request.ReportType, reportDtos);
 
-        if (fileDirectory == null) return new() { };
+        if (fileDirectory == null) return new() {IsSucccessful = false,StatusCode = 400,Message = $"{Messages.SendRaportMessage["GenarateExcelError"]}" };
         bool result = await _emailSenderService.SendEmailForReport(request.EmailAddresses, filePath, request.ReportType);
+        if (!result) return new() { IsSucccessful = false, StatusCode = 400, Message = $"{Messages.SendRaportMessage["EmailSendingError"]}" };
         _fileService.DeleteDirectory(fileDirectory);
-        return new() { }; 
+        return new() { IsSucccessful = true, StatusCode = 200, Message = $"{Messages.SendRaportMessage["RaportSucceded"]}" };
     }
 }

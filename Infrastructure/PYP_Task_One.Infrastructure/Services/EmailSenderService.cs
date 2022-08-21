@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using PYP_Task_One.Aplication;
 using PYP_Task_One.Aplication.Enums;
 using PYP_Task_One.Aplication.Services;
@@ -29,8 +28,8 @@ public class EmailSenderService : IEmailSenderService
         await msg.AddAttachmentAsync(attachmentPath.Substring(attachmentPath.LastIndexOf("/") + 1), fileStream);
         try
         {
-            var response = await client.SendEmailAsync(null);
-            if (response.IsSuccessStatusCode != true)
+            var response = await client.SendEmailAsync(msg);
+            if (response.IsSuccessStatusCode == true)
             {
                 _log.LogInformation("Send Raport: {Email}:{RapartType}:{SendRaportDate}", emailAddresses, type.ToString(), DateTime.Now);
                 return true;
